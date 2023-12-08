@@ -6,11 +6,13 @@
 char board[3][3];
 const char PLAYER = 'X';
 const char COMPUTER = 'O';
+const char SECOND = 'O';
 
 void resetBoard();
 void printBoard();
 int checkFreeSpace();
 void playerMove();
+void secondMove();
 void computerMove();
 char checkWinner();
 void printWinner(char);
@@ -19,13 +21,25 @@ int main()
 {
     char winner = ' ';
     char response = ' ';
+    char play = ' ';
 
-    printf("Made By Pranjal Rimal\n");
+    printf("Made By Pranjal Rimal\n\n");
+
+    // printf("Do you want to play against Computer or Human?\n");
+    // printf("H = Human\tC = Computer ");
+    // scanf(" %c", &play);
+    // play = toupper(play);
+
 
     do
     {
         winner = ' ';
         response = ' ';
+
+        printf("Do you want to play against Computer or Human?\n");
+        printf("H = Human\tC = Computer ");
+        scanf(" %c", &play);
+        play = toupper(play);
 
         resetBoard();
 
@@ -40,12 +54,25 @@ int main()
                 break;
             }
 
+        if (play == 'C')
+        {
             computerMove();
             winner=checkWinner();
             if (winner != ' ' || checkFreeSpace() == 0)
             {
                 break;
             }
+        }
+        else
+        {
+            printBoard();
+            secondMove();
+            winner=checkWinner();
+            if (winner != ' ' || checkFreeSpace() == 0)
+            {
+                break;
+            }
+        }
 
         }
 
@@ -113,10 +140,10 @@ void playerMove()
 
     do
     {
-        printf("Enter row #(1-3): ");
+        printf("Enter row #(1-3) for 'X': ");
         scanf("%d", &x);
         x--;
-        printf("Enter column #(1-3): ");
+        printf("Enter column #(1-3) for 'X': ");
         scanf("%d", &y);
         y--;
 
@@ -131,6 +158,34 @@ void playerMove()
         }
     
     } while (board[x][y] != ' ');
+}
+
+void secondMove(){
+    int x;
+    int y;
+
+    if (checkFreeSpace() > 0)
+    {
+        do
+        {
+            printf("Enter row #(1-3) for 'O': ");
+            scanf("%d", &x);
+            x--;
+            printf("Enter column #(1-3) for 'O': ");
+            scanf("%d", &y);
+            y--;
+
+            if (board[x][y] !=' ')
+            {
+                printf("Invalid Move!\n");
+            }
+            else
+            {
+                board[x][y] = SECOND;
+                break;
+            }
+        } while (board[x][y] != ' ');
+    }
 }
 
 void computerMove()
@@ -182,7 +237,7 @@ char checkWinner()
     {
         return board[0][0];
     }
-    if (board[0][2] == board[1][1] && board[0][0] == board[2][0])
+    if (board[0][2] == board[1][1] && board[0][2    ] == board[2][0])
     {
         return board[0][2];
     }
