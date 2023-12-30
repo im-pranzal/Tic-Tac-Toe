@@ -1,7 +1,8 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<ctype.h>
-#include<time.h>
+// github.com/impranzal
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <time.h>
 
 char board[3][3];
 const char PLAYER = 'X';
@@ -23,14 +24,6 @@ int main()
     char response = ' ';
     char play = ' ';
 
-    printf("Made By Pranjal Rimal\n\n");
-
-    // printf("Do you want to play against Computer or Human?\n");
-    // printf("H = Human\tC = Computer ");
-    // scanf(" %c", &play);
-    // play = toupper(play);
-
-
     do
     {
         winner = ' ';
@@ -48,32 +41,31 @@ int main()
             printBoard();
 
             playerMove();
-            winner=checkWinner();
+            winner = checkWinner();
             if (winner != ' ' || checkFreeSpace() == 0)
             {
                 break;
             }
 
-        if (play == 'C')
-        {
-            computerMove();
-            winner=checkWinner();
-            if (winner != ' ' || checkFreeSpace() == 0)
+            if (play == 'C')
             {
-                break;
+                computerMove();
+                winner = checkWinner();
+                if (winner != ' ' || checkFreeSpace() == 0)
+                {
+                    break;
+                }
             }
-        }
-        else
-        {
-            printBoard();
-            secondMove();
-            winner=checkWinner();
-            if (winner != ' ' || checkFreeSpace() == 0)
+            else
             {
-                break;
+                printBoard();
+                secondMove();
+                winner = checkWinner();
+                if (winner != ' ' || checkFreeSpace() == 0)
+                {
+                    break;
+                }
             }
-        }
-
         }
 
         printBoard();
@@ -82,7 +74,7 @@ int main()
         printf("\nWould you like to play again? (Y/N): ");
         scanf(" %c", &response);
         response = toupper(response);
-    
+
     } while (response == 'Y');
 
     printf("Thanks For Playing!");
@@ -98,9 +90,7 @@ void resetBoard()
         {
             board[i][j] = ' ';
         }
-        
     }
-    
 }
 
 void printBoard()
@@ -125,11 +115,9 @@ int checkFreeSpace()
             {
                 freeSpace--;
             }
-            
         }
-        
     }
-    
+
     return freeSpace;
 }
 
@@ -147,7 +135,7 @@ void playerMove()
         scanf("%d", &y);
         y--;
 
-        if (board[x][y] !=' ')
+        if (board[x][y] != ' ')
         {
             printf("Invalid Move!\n");
         }
@@ -156,11 +144,12 @@ void playerMove()
             board[x][y] = PLAYER;
             break;
         }
-    
+
     } while (board[x][y] != ' ');
 }
 
-void secondMove(){
+void secondMove()
+{
     int x;
     int y;
 
@@ -175,7 +164,7 @@ void secondMove(){
             scanf("%d", &y);
             y--;
 
-            if (board[x][y] !=' ')
+            if (board[x][y] != ' ')
             {
                 printf("Invalid Move!\n");
             }
@@ -190,7 +179,7 @@ void secondMove(){
 
 void computerMove()
 {
-    //create a seed based on current time
+    // create a seed based on current time
     srand(time(0));
     int x;
     int y;
@@ -210,44 +199,42 @@ void computerMove()
     {
         printWinner(' ');
     }
-    
-    
 }
 
 char checkWinner()
 {
-   //check rows
-   for (int i = 0; i < 3; i++)
-   {
-    if (board[i][0] == board[i][1] && board[i][0] == board[i][2])
+    // check rows
+    for (int i = 0; i < 3; i++)
     {
-        return board[i][0];
+        if (board[i][0] == board[i][1] && board[i][0] == board[i][2])
+        {
+            return board[i][0];
+        }
     }
-   }
-   //check column
-   for (int i = 0; i < 3; i++)
-   {
-    if (board[0][i] == board[1][i] && board[0][i] == board[2][i])
+    // check column
+    for (int i = 0; i < 3; i++)
     {
-        return board[0][i];
-    } 
-   }
-    //check diagonals
+        if (board[0][i] == board[1][i] && board[0][i] == board[2][i])
+        {
+            return board[0][i];
+        }
+    }
+    // check diagonals
     if (board[0][0] == board[1][1] && board[0][0] == board[2][2])
     {
         return board[0][0];
     }
-    if (board[0][2] == board[1][1] && board[0][2    ] == board[2][0])
+    if (board[0][2] == board[1][1] && board[0][2] == board[2][0])
     {
         return board[0][2];
     }
 
     return ' ';
-
 }
 
 void printWinner(char winner)
 {
+    
     if (winner == PLAYER)
     {
         printf("You Win!");
@@ -260,5 +247,4 @@ void printWinner(char winner)
     {
         printf("It's A Draw");
     }
-    
 }
